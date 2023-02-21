@@ -8,7 +8,7 @@ from datetime import datetime
 import agent.agent_interfaces_connector as agent_lib
 from agent.interfaces_python_data_structs import input_data_str, output_data_str
 
-from pydrivingsim import World, Vehicle, TrafficLight, Barricade, Barricade2
+from pydrivingsim import World, Vehicle, TrafficLight, Barricade
 
 
 c = agent_lib.AgentConnector()
@@ -124,19 +124,18 @@ class Agent():
         #         barricade = obj
         #         print(type(obj))
         #         break
-
-
+        barricade = None
+        barricade2 = None
         for obj in World().obj_list:
             if type(obj) is TrafficLight:
                 trafficlight = obj
                 print(type(obj))
             elif type(obj) is Barricade:
-                barricade = obj
+                if barricade is None:
+                    barricade = obj
+                elif barricade2 is None:
+                    barricade2 = obj
                 print(type(obj))
-            elif type(obj) is Barricade2:
-                barricade2 = obj
-                print(type(obj))
-                break
 
 
         #     print(type(obj))

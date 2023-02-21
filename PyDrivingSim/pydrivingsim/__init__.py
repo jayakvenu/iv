@@ -8,7 +8,6 @@ from pydrivingsim.object import VirtualObject
 from pydrivingsim.vehicle import Vehicle
 from pydrivingsim.trafficlight import TrafficLight
 from pydrivingsim.barricade import Barricade
-from pydrivingsim.barricade2 import Barricade2
 
 # The Agent
 from pydrivingsim.agent import Agent

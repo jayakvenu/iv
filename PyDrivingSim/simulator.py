@@ -4,7 +4,7 @@
 
 import signal
 
-from pydrivingsim import World, Vehicle, TrafficLight, Agent, Barricade, Barricade2
+from pydrivingsim import World, Vehicle, TrafficLight, Agent, Barricade
 
 class GracefulKiller:
   kill_now = False
@@ -22,7 +22,7 @@ def main():
     trafficlight = TrafficLight()
     trafficlight.set_pos((162,-2))
     barricade = Barricade()
-    barricade2 = Barricade2()
+    barricade2 = Barricade()
     barricade.set_pos((20,0))
     barricade2.set_pos((35,1.5))
 
