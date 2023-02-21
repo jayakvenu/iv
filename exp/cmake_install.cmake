@@ -1,4 +1,4 @@
-# Install script for directory: /home/jay/Documents/iv_marko_latest/exp
+# Install script for directory: /home/marko/iv/exp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/jay/Documents/iv_marko_latest/exp/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/marko/iv/exp/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -5,13 +5,13 @@
 # compile CXX with /usr/bin/clang++
 C_DEFINES = -DLOG_INTERNAL
 
-C_INCLUDES = -I/home/jay/Documents/iv_marko_latest/exp/matlab -I/home/jay/Documents/iv_marko_latest/exp/lib -I/home/jay/Documents/iv_marko_latest/exp/log
+C_INCLUDES = -I/home/marko/iv/exp/matlab -I/home/marko/iv/exp/lib -I/home/marko/iv/exp/log
 
 C_FLAGS =   -O2 -DNOT_INLINED -DSERVER
 
 CXX_DEFINES = -DLOG_INTERNAL
 
-CXX_INCLUDES = -I/home/jay/Documents/iv_marko_latest/exp/matlab -I/home/jay/Documents/iv_marko_latest/exp/lib -I/home/jay/Documents/iv_marko_latest/exp/log
+CXX_INCLUDES = -I/home/marko/iv/exp/matlab -I/home/marko/iv/exp/lib -I/home/marko/iv/exp/log
 
 CXX_FLAGS =   -O2 -DNOT_INLINED -DSERVER -std=gnu++11
 

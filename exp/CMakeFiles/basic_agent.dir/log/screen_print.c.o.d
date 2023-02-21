@@ -1,6 +1,5 @@
 CMakeFiles/basic_agent.dir/log/screen_print.c.o: \
-  /home/jay/Documents/iv_marko_latest/exp/log/screen_print.c \
-  /usr/include/stdio.h \
+  /home/marko/iv/exp/log/screen_print.c /usr/include/stdio.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/include/features.h /usr/include/features-time64.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -37,4 +36,4 @@ CMakeFiles/basic_agent.dir/log/screen_print.c.o: \
   /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
-  /home/jay/Documents/iv_marko_latest/exp/log/screen_print_c.h
+  /home/marko/iv/exp/log/screen_print_c.h

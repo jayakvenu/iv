@@ -227,7 +227,7 @@ class Graph
 {
     public:
     Graph() {
-        all_nodes = new Quad(0,0,120,2, 10);
+        all_nodes = new Quad(-2,120,-2,4, 10);
     };
     Quad* all_nodes;
     shared_ptr<Node> add_vertex(Pose2d p)
@@ -252,13 +252,9 @@ class Graph
         points.push_back(n->pose);
         if (n->has_parent)
         {
-            printTable("OK", 0);
             vector<Pose2d> points2 = get_path(n->parent);
-            printTable("AY", 0);
             points.insert( points.end(), points2.begin(), points2.end() );
-            printTable("OKAY", 0);
         } 
-        printTable(to_string(points.size()).c_str(), 0);
         return points;
     };
 };
@@ -271,10 +267,10 @@ class SingleTrack
     public:
     Pose2d pose;
     SingleTrack(){};
-    float max_steer = M_PI_4/1.1;
-    float velocity;
+    float max_steer = M_PI/8;
+    float velocity= 0.0;
     float max_velocity = 20.0;
-    float L = 2.5; // TODO - take from data
+    float L = 3.5; // TODO - take from data
     void update(float dt, float steering_angle, float acc)
     {
         velocity += acc *dt;
@@ -332,7 +328,7 @@ class RRTstar
         Pose2d newp;
         newp.x = min + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(max-min)));
         newp.y = min + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(1.6-min)));
-        newp.theta = -M_PI + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(-M_PI-(2*M_PI))));
+        newp.theta = -M_PI + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/((2*M_PI))));
         return newp;
     };
     bool colliding(Pose2d p)
@@ -346,7 +342,16 @@ class RRTstar
         while (s < max_steps)
         {
             s++;
-            Pose2d rnd = get_random_point(0,120);
+            
+            Pose2d rnd = get_random_point(-1.0,60);
+            if (rand() < 0.1) rnd = goal;
+            // else{
+            //     while (colliding(rnd))
+            //     {
+            //         rnd = get_random_point(0,120);
+            //     }
+            // }
+
             vector<shared_ptr<Node>> nearest = graph.get_near(rnd, step_size);
             float closest_d = __FLT_MAX__;
             Pose2d new_pose;
@@ -373,9 +378,6 @@ class RRTstar
             if (is_goal(new_node) && !star) return graph.get_path(new_node);
 
         }
-        printTable("OUT!.", 0);
-        
-        std::cout<<"planning done"<<std::endl;  
 
         return graph.get_path(end_node);  
         std::cout<<"planning done_1"<<std::endl;  
@@ -384,7 +386,6 @@ class RRTstar
     bool is_goal(shared_ptr<Node> &n)
     {
         float dist = (goal - n->pose).norm2d();
-        printTable(to_string(dist).c_str(), 0);
         if (dist < 2* step_size )
         {
             if (end_node == nullptr) end_node = n;
@@ -399,28 +400,24 @@ class RRTstar
 };
 
 int flag=0;
-ofstream fw("/home/jay/Documents/iv_marko_latest/exp/trajectory.txt", std::ofstream::out);
-ofstream write_1("/home/jay/Documents/iv_marko_latest/exp/carpose.txt", std::ofstream::out);
+ofstream fw("../trajectory.txt", std::ofstream::out);
+ofstream write_1("../carpose.txt", std::ofstream::out);
 
 
 
 class LatControl
 {
     public:
-    float kh = 0.08;
-    float kp = 0.5;
-    float lookahead_distance = 0.5;
+    float kh = 3.0;
+    float kp = 1.8;
+    float lookahead_distance = 1.0;
     float control( vector<Pose2d> trajectory, Pose2d car_pose)
     {   
-        Pose2d car_pose1;
-
-
         Pose2d lookahead;
-        double pi = 3.14159265359;
-        car_pose1.theta =  (car_pose.theta * (pi / 180));
-        lookahead.x = car_pose.x + lookahead_distance * cos(car_pose1.theta);
-        lookahead.y = car_pose.y + lookahead_distance * sin(car_pose1.theta);
-        std::cout<<"Lookahead : "<<lookahead.x<<"  "<<lookahead.y<<std::endl;
+    
+        // car_pose1.theta =  (car_pose.theta * (pi / 180));
+        lookahead.x = car_pose.x + lookahead_distance * cos(car_pose.theta);
+        lookahead.y = car_pose.y + lookahead_distance * sin(car_pose.theta);
         // # Find the point on the trajectory that is closest to the lookahead distance
         vector<float> dists;
         int idx = 0;
@@ -435,44 +432,25 @@ class LatControl
                 //dist = best_dist;
                 best_dist = dist;
                 idx = i;
-                //std::cout<<"Success : "<<idx<<std::endl;
-            
-            }
 
-            if(flag==0)
-            {
-                fw<< trajectory[i].x << " "<< trajectory[i].y << "\n";
+
             }
 
             
         }
-        flag = 1;
-        fw.close();
-        std::cout<<"best dist : "<<best_dist<<std::endl;
-        std::cout<<"Trajectory : "<<trajectory[idx].x<<"  "<<trajectory[idx].y<<std::endl;
-        //std::cout<<"Index trajectory : "<<idx<<std::endl;
-        std::cout<<"Car pose : "<<car_pose.x<<"  "<<car_pose.y<<std::endl;
-        write_1.flush();
-        write_1<< car_pose.x << " "<< car_pose.y << "\n";
-        float path_error = best_dist;
+
         float val = (float(lookahead.y - car_pose.y) * (trajectory[idx].x - lookahead.x)) - 
            (float(lookahead.x - car_pose.x) * (trajectory[idx].y - lookahead.y));
         float sign = 0;
         if (val > 0) sign = -1;
         else if (val < 0) sign = 1;
-        // # Compute the heading error
-        // trajectory[idx].theta = atanf((trajectory[idx+1].y - trajectory[idx].y)/(trajectory[idx+1].x- trajectory[idx].x));
-        trajectory[idx].theta = trajectory[idx].theta * (180.0/3.141592653589793238463);
-        //  if(trajectory[idx].theta < 0)
-        //      trajectory[idx].theta = -(trajectory[idx].theta);
-        int n = trajectory.size();
-        //std::cout<<"Size trajectory : "<<n<<std::endl;
-        std::cout<<"Degrees trajectory : "<<trajectory[idx].theta<<std::endl;
-        std::cout<<"Degrees car : "<<car_pose.theta<<std::endl;
-        std::cout<<"Trajectory last:::::: "<<trajectory[n-2].x<<"  "<<trajectory[n-2].y<<trajectory[n-2].theta<<std::endl;
+        // std::cout << trajectory[idx].theta <<  "  <- traj  car -> " << car_pose.theta << endl;
         float heading_error = (trajectory[idx].theta) - car_pose.theta;
+        float path_error = best_dist * sign * cos(heading_error);
+        std::cout << "path error " << path_error << endl;
+        std::cout << "heading error " << heading_error << endl;
         // # Compute the steering angle
-        float steering_angle = kh * heading_error + kp * path_error * (sign);
+        float steering_angle = kh * heading_error + kp * path_error;
         // # print(steering_angle)
         return steering_angle;
         
@@ -484,7 +462,7 @@ class LatControl
 
 int main(int argc, const char * argv[]) 
 {
-    logger.enable(true);
+    logger.enable(false);
 
     // Messages variables
     scenario_msg_t scenario_msg;
@@ -507,7 +485,7 @@ int main(int argc, const char * argv[])
     // Start server of the Agent
     printLine();
     //printLine();
-    RRTstar planner = RRTstar(0.25, false);
+    RRTstar planner = RRTstar(1.0, false);
     planner.map = Map();
     LatControl latCtrl = LatControl();
     // Localiser loc(); // Need to init with obstacle positions.
@@ -515,7 +493,7 @@ int main(int argc, const char * argv[])
      bool got_info = false;
 
     
-
+    std::cout << "RUNNING 1 " << endl;
     Pose2d goal_f ;
     goal_f.x = 0;
     goal_f.y = 0;
@@ -528,7 +506,7 @@ int main(int argc, const char * argv[])
     car_pose.x = 0;
     car_pose.y = 0;
     car_pose.theta = 0;
-
+    std::cout << "RUNNING 2 " << endl;
     while (server_run == 1) {
 
         // Clean the buffer
@@ -537,7 +515,7 @@ int main(int argc, const char * argv[])
         // Receive scenario message from the environment
         if (server_receive_from_client(&server_run, &message_id, &scenario_msg.data_struct) == 0) {
 
-
+            // std::cout << "RUNNING 3 " << endl;
             // Data struct
             input_data_str *in = &scenario_msg.data_struct;
             output_data_str *out = &manoeuvre_msg.data_struct;
@@ -577,85 +555,51 @@ int main(int argc, const char * argv[])
                 planner.goal.y = 0;
                 planner.goal.theta = 0;
                 
-                
-                // need to add obstacles to map!!
-                //planner.map.add_obstacle(22,1.5,5/2,7/2);
+
                 planner.map.add_obstacle(in->ObjX[0],in->ObjY[0],in->ObjLen[0], in->ObjWidth[0]);
                 planner.map.add_obstacle(in->ObjX[1],in->ObjY[1],in->ObjLen[0],in->ObjWidth[0]);
                 //planner.map.add_obstacle(in->ObjX[1],in->ObjY[1],in->ObjWidth[0], in->ObjLen[0]);
 
-
-                
-
-                
-
-
-                printTable("so far so good.1..", 0);
                 trajectory = planner.planning(10000);
-                std::cout<<"hi";
                 reverse(trajectory.begin(), trajectory.end());
                 trajectory.push_back(planner.goal);
+                std::cout << "RUNNING 4" << endl;
 
-                printLogTitle(message_id, "Trajectory");
-                std::cout<<trajectory.size()<<std::endl;
-                printTable("so far so good.2.", 0);
-
-                // TODO 
-                //Localiser loc = Localiser(obs_1,obs_2);
-
-                // feed map obstacle pos and sizes.
-        
+                // log trajectory
+                for (int i = 0; i < trajectory.size(); i++)
+                {
+                    fw << trajectory[i].x << "," << trajectory[i].y << endl;
+                }
+                fw.close();
             }
-
-            // TODO 
-            // update car pos using localiser - give it poses of obstacles!
-            
             // also need to tune gains for both long and lateral control
-            std::cout<<"Max element::"<<max_el<<std::endl;
-            float p_gain = 0.1;
-            float i_gain = 0.3;
-            float d_gain = 0.1;
-            std::cout<<"ObjLen : "<<in->ObjLen[0]<<std::endl;
-            std::cout<<"ObjWidth : "<<in->ObjWidth[0]<<std::endl;
-            double error = v0 - vr;
-            printLogTitle(message_id, "vr");
-            std::cout<<vr<<std::endl;
-            printLogTitle(message_id, "vo");
-            std::cout<<v0<<std::endl;
-            float derivative = a0;
-            integral = integral/ 2.0 +  error * DT;
-            printLogTitle(message_id, "Integral");
-            std::cout<<integral<<std::endl;
-            double req_ped = p_gain * error + i_gain * integral + d_gain * derivative;
+            float p_gain = 1.0;
+            float i_gain = .0;
+            float d_gain = 0.0;
+            float vel_error = v0 - vr;
+            float acc_error = a0;
 
-            // req_ped = abs(req_ped) < 0.001 ? 0: req_ped;
-            // std::cout << '\n' << req_ped << '\n';
-            printLogTitle(message_id, "req_pedal");
-            std::cout<<req_ped<<std::endl;
+            double req_ped = -p_gain * vel_error * DT;
+            // std::cout<<req_ped<< "  req_ped" <<std::endl;
             //req_ped = -0.2 ;
-            out->RequestedAcc = -(req_ped);
+            out->RequestedAcc = (v0 < 4.0) ? 0.2 : 0.0;
 
             car_pose.x = in->ObjVel[0];
             car_pose.y = in->ObjVel[1];
-            if(in->ObjVel[2] < 0)
-                car_pose.theta = -(in->ObjVel[2]);
-            else
-                car_pose.theta = -(in->ObjVel[2]);
 
+            car_pose.theta = -in->ObjVel[2] * M_PI / 180.0;
+            // std::cout << car_pose.theta << " car theta  " << endl;
 
-            
+            float steering = latCtrl.control(trajectory, car_pose);
+            out->RequestedSteerWhlAg = steering;
+            std::cout << steering << "  steering" << endl;
 
-            out->RequestedSteerWhlAg = latCtrl.control(trajectory, car_pose);
-
-            if (car_pose.x > planner.goal.x + 1)
+            if (car_pose.x > planner.goal.x )
                 {
-                    goal_f.x = car_pose.x +1;
+                    goal_f.x = car_pose.x +2.0;
                     trajectory.push_back(goal_f);
                     out->RequestedSteerWhlAg = latCtrl.control(trajectory, car_pose);
                 }
-            printLogTitle(message_id, "STeering angle");
-            std::cout<<out->RequestedSteerWhlAg<<std::endl;
-
 
             // Send manoeuvre message to the environment
             if (server_send_to_client(server_run, message_id, &manoeuvre_msg.data_struct) == -1) {
@@ -664,6 +608,7 @@ int main(int argc, const char * argv[])
             } else {
                 //printLogTitle(message_id, "sent message");
             }
+            write_1 << car_pose.x << "," << car_pose.y << endl;
         }
     }
     write_1.close();

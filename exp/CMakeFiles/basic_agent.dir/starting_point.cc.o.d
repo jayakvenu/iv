@@ -1,6 +1,5 @@
 CMakeFiles/basic_agent.dir/starting_point.cc.o: \
-  /home/jay/Documents/iv_marko_latest/exp/starting_point.cc \
-  /usr/include/stdio.h \
+  /home/marko/iv/exp/starting_point.cc /usr/include/stdio.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/include/features.h /usr/include/features-time64.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -216,16 +215,16 @@ CMakeFiles/basic_agent.dir/starting_point.cc.o: \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/x86_64-linux-gnu/c++/11/bits/c++io.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/fstream.tcc \
-  /home/jay/Documents/iv_marko_latest/exp/log/screen_print_c.h \
-  /home/jay/Documents/iv_marko_latest/exp/log/screen_print.h \
+  /home/marko/iv/exp/log/screen_print_c.h \
+  /home/marko/iv/exp/log/screen_print.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/chrono \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/ratio \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/limits \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/ctime \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/parse_numbers.h \
-  /home/jay/Documents/iv_marko_latest/exp/lib/server_lib.h \
-  /home/jay/Documents/iv_marko_latest/exp/lib/interfaces_data_structs.h \
-  /home/jay/Documents/iv_marko_latest/exp/log/logvars.h \
+  /home/marko/iv/exp/lib/server_lib.h \
+  /home/marko/iv/exp/lib/interfaces_data_structs.h \
+  /home/marko/iv/exp/log/logvars.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/mutex \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/std_mutex.h \
   /usr/bin/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/unique_lock.h \

@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/jay/Documents/iv_marko_latest/bin/basic_agent"
-  "/home/jay/Documents/iv_marko_latest/bin/basic_agent.pdb"
+  "/home/marko/iv/bin/basic_agent"
+  "/home/marko/iv/bin/basic_agent.pdb"
   "CMakeFiles/basic_agent.dir/log/logvars.cc.o"
   "CMakeFiles/basic_agent.dir/log/logvars.cc.o.d"
   "CMakeFiles/basic_agent.dir/log/screen_print.c.o"

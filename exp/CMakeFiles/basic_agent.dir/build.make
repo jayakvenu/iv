@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jay/Documents/iv_marko_latest/exp
+CMAKE_SOURCE_DIR = /home/marko/iv/exp
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jay/Documents/iv_marko_latest/exp
+CMAKE_BINARY_DIR = /home/marko/iv/exp
 
 # Include any dependencies generated for this target.
 include CMakeFiles/basic_agent.dir/depend.make
@@ -72,44 +72,44 @@ include CMakeFiles/basic_agent.dir/flags.make
 CMakeFiles/basic_agent.dir/log/screen_print.c.o: CMakeFiles/basic_agent.dir/flags.make
 CMakeFiles/basic_agent.dir/log/screen_print.c.o: log/screen_print.c
 CMakeFiles/basic_agent.dir/log/screen_print.c.o: CMakeFiles/basic_agent.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jay/Documents/iv_marko_latest/exp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/basic_agent.dir/log/screen_print.c.o"
-	/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/basic_agent.dir/log/screen_print.c.o -MF CMakeFiles/basic_agent.dir/log/screen_print.c.o.d -o CMakeFiles/basic_agent.dir/log/screen_print.c.o -c /home/jay/Documents/iv_marko_latest/exp/log/screen_print.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/marko/iv/exp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/basic_agent.dir/log/screen_print.c.o"
+	/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/basic_agent.dir/log/screen_print.c.o -MF CMakeFiles/basic_agent.dir/log/screen_print.c.o.d -o CMakeFiles/basic_agent.dir/log/screen_print.c.o -c /home/marko/iv/exp/log/screen_print.c
 
 CMakeFiles/basic_agent.dir/log/screen_print.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/basic_agent.dir/log/screen_print.c.i"
-	/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/jay/Documents/iv_marko_latest/exp/log/screen_print.c > CMakeFiles/basic_agent.dir/log/screen_print.c.i
+	/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/marko/iv/exp/log/screen_print.c > CMakeFiles/basic_agent.dir/log/screen_print.c.i
 
 CMakeFiles/basic_agent.dir/log/screen_print.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/basic_agent.dir/log/screen_print.c.s"
-	/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/jay/Documents/iv_marko_latest/exp/log/screen_print.c -o CMakeFiles/basic_agent.dir/log/screen_print.c.s
+	/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/marko/iv/exp/log/screen_print.c -o CMakeFiles/basic_agent.dir/log/screen_print.c.s
 
 CMakeFiles/basic_agent.dir/log/logvars.cc.o: CMakeFiles/basic_agent.dir/flags.make
 CMakeFiles/basic_agent.dir/log/logvars.cc.o: log/logvars.cc
 CMakeFiles/basic_agent.dir/log/logvars.cc.o: CMakeFiles/basic_agent.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jay/Documents/iv_marko_latest/exp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/basic_agent.dir/log/logvars.cc.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/basic_agent.dir/log/logvars.cc.o -MF CMakeFiles/basic_agent.dir/log/logvars.cc.o.d -o CMakeFiles/basic_agent.dir/log/logvars.cc.o -c /home/jay/Documents/iv_marko_latest/exp/log/logvars.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/marko/iv/exp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/basic_agent.dir/log/logvars.cc.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/basic_agent.dir/log/logvars.cc.o -MF CMakeFiles/basic_agent.dir/log/logvars.cc.o.d -o CMakeFiles/basic_agent.dir/log/logvars.cc.o -c /home/marko/iv/exp/log/logvars.cc
 
 CMakeFiles/basic_agent.dir/log/logvars.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/basic_agent.dir/log/logvars.cc.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jay/Documents/iv_marko_latest/exp/log/logvars.cc > CMakeFiles/basic_agent.dir/log/logvars.cc.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/marko/iv/exp/log/logvars.cc > CMakeFiles/basic_agent.dir/log/logvars.cc.i
 
 CMakeFiles/basic_agent.dir/log/logvars.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/basic_agent.dir/log/logvars.cc.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jay/Documents/iv_marko_latest/exp/log/logvars.cc -o CMakeFiles/basic_agent.dir/log/logvars.cc.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/marko/iv/exp/log/logvars.cc -o CMakeFiles/basic_agent.dir/log/logvars.cc.s
 
 CMakeFiles/basic_agent.dir/starting_point.cc.o: CMakeFiles/basic_agent.dir/flags.make
 CMakeFiles/basic_agent.dir/starting_point.cc.o: starting_point.cc
 CMakeFiles/basic_agent.dir/starting_point.cc.o: CMakeFiles/basic_agent.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jay/Documents/iv_marko_latest/exp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/basic_agent.dir/starting_point.cc.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/basic_agent.dir/starting_point.cc.o -MF CMakeFiles/basic_agent.dir/starting_point.cc.o.d -o CMakeFiles/basic_agent.dir/starting_point.cc.o -c /home/jay/Documents/iv_marko_latest/exp/starting_point.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/marko/iv/exp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/basic_agent.dir/starting_point.cc.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/basic_agent.dir/starting_point.cc.o -MF CMakeFiles/basic_agent.dir/starting_point.cc.o.d -o CMakeFiles/basic_agent.dir/starting_point.cc.o -c /home/marko/iv/exp/starting_point.cc
 
 CMakeFiles/basic_agent.dir/starting_point.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/basic_agent.dir/starting_point.cc.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jay/Documents/iv_marko_latest/exp/starting_point.cc > CMakeFiles/basic_agent.dir/starting_point.cc.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/marko/iv/exp/starting_point.cc > CMakeFiles/basic_agent.dir/starting_point.cc.i
 
 CMakeFiles/basic_agent.dir/starting_point.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/basic_agent.dir/starting_point.cc.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jay/Documents/iv_marko_latest/exp/starting_point.cc -o CMakeFiles/basic_agent.dir/starting_point.cc.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/marko/iv/exp/starting_point.cc -o CMakeFiles/basic_agent.dir/starting_point.cc.s
 
 # Object files for target basic_agent
 basic_agent_OBJECTS = \
@@ -120,16 +120,16 @@ basic_agent_OBJECTS = \
 # External object files for target basic_agent
 basic_agent_EXTERNAL_OBJECTS =
 
-/home/jay/Documents/iv_marko_latest/bin/basic_agent: CMakeFiles/basic_agent.dir/log/screen_print.c.o
-/home/jay/Documents/iv_marko_latest/bin/basic_agent: CMakeFiles/basic_agent.dir/log/logvars.cc.o
-/home/jay/Documents/iv_marko_latest/bin/basic_agent: CMakeFiles/basic_agent.dir/starting_point.cc.o
-/home/jay/Documents/iv_marko_latest/bin/basic_agent: CMakeFiles/basic_agent.dir/build.make
-/home/jay/Documents/iv_marko_latest/bin/basic_agent: CMakeFiles/basic_agent.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jay/Documents/iv_marko_latest/exp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable /home/jay/Documents/iv_marko_latest/bin/basic_agent"
+/home/marko/iv/bin/basic_agent: CMakeFiles/basic_agent.dir/log/screen_print.c.o
+/home/marko/iv/bin/basic_agent: CMakeFiles/basic_agent.dir/log/logvars.cc.o
+/home/marko/iv/bin/basic_agent: CMakeFiles/basic_agent.dir/starting_point.cc.o
+/home/marko/iv/bin/basic_agent: CMakeFiles/basic_agent.dir/build.make
+/home/marko/iv/bin/basic_agent: CMakeFiles/basic_agent.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/marko/iv/exp/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable /home/marko/iv/bin/basic_agent"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/basic_agent.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-CMakeFiles/basic_agent.dir/build: /home/jay/Documents/iv_marko_latest/bin/basic_agent
+CMakeFiles/basic_agent.dir/build: /home/marko/iv/bin/basic_agent
 .PHONY : CMakeFiles/basic_agent.dir/build
 
 CMakeFiles/basic_agent.dir/clean:
@@ -137,6 +137,6 @@ CMakeFiles/basic_agent.dir/clean:
 .PHONY : CMakeFiles/basic_agent.dir/clean
 
 CMakeFiles/basic_agent.dir/depend:
-	cd /home/jay/Documents/iv_marko_latest/exp && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/jay/Documents/iv_marko_latest/exp /home/jay/Documents/iv_marko_latest/exp /home/jay/Documents/iv_marko_latest/exp /home/jay/Documents/iv_marko_latest/exp /home/jay/Documents/iv_marko_latest/exp/CMakeFiles/basic_agent.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/marko/iv/exp && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/marko/iv/exp /home/marko/iv/exp /home/marko/iv/exp /home/marko/iv/exp /home/marko/iv/exp/CMakeFiles/basic_agent.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/basic_agent.dir/depend
 
