@@ -24,7 +24,7 @@ def main():
     barricade = Barricade()
     barricade2 = Barricade2()
     barricade.set_pos((20,0))
-    barricade2.set_pos((40,0))
+    barricade2.set_pos((35,1.5))
 
 
     killer = GracefulKiller()

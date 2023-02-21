@@ -9,12 +9,14 @@
 #include <algorithm>
 #include <memory>
 #include <iostream>
+#include <fstream>
 extern "C" {
 #include "screen_print_c.h"
 }
 #include "screen_print.h"
 #include "server_lib.h"
 #include "logvars.h"
+#include <bits/stdc++.h>
 
 // --- MATLAB PRIMITIVES INCLUDE ---
 // #include "primitives.h"
@@ -23,6 +25,11 @@ extern "C" {
 #define DEFAULT_SERVER_IP    "127.0.0.1"
 #define SERVER_PORT                30000  // Server port
 #define DT 0.05
+
+
+
+std::ofstream cout("output.txt");
+
 
 // Handler for CTRL-C
 #include <signal.h>
@@ -76,6 +83,7 @@ struct Node
     Node(){};
     Node(Pose2d p) : pose(p){};
 };
+
 
 class Quad
 {
@@ -174,7 +182,8 @@ class Quad
 
 
 
-struct obstacle{
+struct obstacle
+{
     Pose2d p;
     float w;
     float l;
@@ -188,7 +197,8 @@ class Map
     public:
 
     bool colliding(Pose2d p)
-    {
+    {   
+
         static double s = 0.5; // safety distance
         for (int i = 0; i < obstacles.size(); i++)
         {
@@ -196,9 +206,12 @@ class Map
             float y = obstacles[i].p.y;
             float l2 = obstacles[i].l/2 + s;
             float w2 = obstacles[i].w/2 + s;
-            if (p.x > x - w2 && p.x < x + w2 && p.y > y - l2 && p.y < p.y > l2) return true;
+            if (p.x > x - w2 && p.x < x + w2 && p.y > y - l2 && p.y < y + l2) return true;
+            
         }
         return false;
+
+        
     };
     vector<obstacle> obstacles;
 
@@ -214,7 +227,7 @@ class Graph
 {
     public:
     Graph() {
-        all_nodes = new Quad(0,0,10,10, 10);
+        all_nodes = new Quad(0,0,120,2, 10);
     };
     Quad* all_nodes;
     shared_ptr<Node> add_vertex(Pose2d p)
@@ -258,10 +271,10 @@ class SingleTrack
     public:
     Pose2d pose;
     SingleTrack(){};
-    float max_steer = M_PI_4;
+    float max_steer = M_PI_4/1.1;
     float velocity;
     float max_velocity = 20.0;
-    float L = 4; // TODO - take from data
+    float L = 2.5; // TODO - take from data
     void update(float dt, float steering_angle, float acc)
     {
         velocity += acc *dt;
@@ -318,7 +331,7 @@ class RRTstar
     {
         Pose2d newp;
         newp.x = min + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(max-min)));
-        newp.y = min + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(2-min)));
+        newp.y = min + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(1.6-min)));
         newp.theta = -M_PI + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(-M_PI-(2*M_PI))));
         return newp;
     };
@@ -352,9 +365,9 @@ class RRTstar
             }
             if (closest_d == __FLT_MAX__) continue;
             shared_ptr<Node> new_node = graph.add_vertex(new_pose);
-            printTable("so far so good.c..", 0);
+            //printTable("so far so good.c..", 0);
             graph.add_edge(near_node, new_node, (near_node->pose - new_node->pose).norm2d());
-            printTable("so far so good.d..", 0);
+            //printTable("so far so good.d..", 0);
 
             if (star) rewire(new_node);
             if (is_goal(new_node) && !star) return graph.get_path(new_node);
@@ -365,7 +378,7 @@ class RRTstar
         std::cout<<"planning done"<<std::endl;  
 
         return graph.get_path(end_node);  
-        std::cout<<"planning done"<<std::endl;  
+        std::cout<<"planning done_1"<<std::endl;  
         
     };
     bool is_goal(shared_ptr<Node> &n)
@@ -385,13 +398,17 @@ class RRTstar
 
 };
 
+int flag=0;
+ofstream fw("/home/jay/Documents/iv_marko_latest/exp/trajectory.txt", std::ofstream::out);
+ofstream write_1("/home/jay/Documents/iv_marko_latest/exp/carpose.txt", std::ofstream::out);
+
 
 
 class LatControl
 {
     public:
-    float kh = 0.2;
-    float kp = 0.7;
+    float kh = 0.08;
+    float kp = 0.5;
     float lookahead_distance = 0.5;
     float control( vector<Pose2d> trajectory, Pose2d car_pose)
     {   
@@ -419,12 +436,24 @@ class LatControl
                 best_dist = dist;
                 idx = i;
                 //std::cout<<"Success : "<<idx<<std::endl;
+            
             }
+
+            if(flag==0)
+            {
+                fw<< trajectory[i].x << " "<< trajectory[i].y << "\n";
+            }
+
+            
         }
+        flag = 1;
+        fw.close();
         std::cout<<"best dist : "<<best_dist<<std::endl;
         std::cout<<"Trajectory : "<<trajectory[idx].x<<"  "<<trajectory[idx].y<<std::endl;
         //std::cout<<"Index trajectory : "<<idx<<std::endl;
         std::cout<<"Car pose : "<<car_pose.x<<"  "<<car_pose.y<<std::endl;
+        write_1.flush();
+        write_1<< car_pose.x << " "<< car_pose.y << "\n";
         float path_error = best_dist;
         float val = (float(lookahead.y - car_pose.y) * (trajectory[idx].x - lookahead.x)) - 
            (float(lookahead.x - car_pose.x) * (trajectory[idx].y - lookahead.y));
@@ -446,9 +475,12 @@ class LatControl
         float steering_angle = kh * heading_error + kp * path_error * (sign);
         // # print(steering_angle)
         return steering_angle;
+        
+        
     }
-
+    
 };
+
 
 int main(int argc, const char * argv[]) 
 {
@@ -475,7 +507,7 @@ int main(int argc, const char * argv[])
     // Start server of the Agent
     printLine();
     //printLine();
-    RRTstar planner = RRTstar(1.0, false);
+    RRTstar planner = RRTstar(0.25, false);
     planner.map = Map();
     LatControl latCtrl = LatControl();
     // Localiser loc(); // Need to init with obstacle positions.
@@ -540,20 +572,27 @@ int main(int argc, const char * argv[])
     
                 max_el = *max_element (in->ObjX, in->ObjX + n);
 
+                
                 planner.goal.x = max_el + 5 ;
                 planner.goal.y = 0;
                 planner.goal.theta = 0;
                 
                 
                 // need to add obstacles to map!!
-                //planner.map.add_obstacle(20,0,3,1.5);
-                planner.map.add_obstacle(in->ObjX[0],in->ObjY[0],in->ObjLen[0],in->ObjWidth[0]);
-                planner.map.add_obstacle(in->ObjX[1],in->ObjY[1],in->ObjLen[1],in->ObjWidth[1]);
+                //planner.map.add_obstacle(22,1.5,5/2,7/2);
+                planner.map.add_obstacle(in->ObjX[0],in->ObjY[0],in->ObjLen[0], in->ObjWidth[0]);
+                planner.map.add_obstacle(in->ObjX[1],in->ObjY[1],in->ObjLen[0],in->ObjWidth[0]);
+                //planner.map.add_obstacle(in->ObjX[1],in->ObjY[1],in->ObjWidth[0], in->ObjLen[0]);
 
+
+                
+
+                
 
 
                 printTable("so far so good.1..", 0);
                 trajectory = planner.planning(10000);
+                std::cout<<"hi";
                 reverse(trajectory.begin(), trajectory.end());
                 trajectory.push_back(planner.goal);
 
@@ -572,11 +611,12 @@ int main(int argc, const char * argv[])
             // update car pos using localiser - give it poses of obstacles!
             
             // also need to tune gains for both long and lateral control
-
+            std::cout<<"Max element::"<<max_el<<std::endl;
             float p_gain = 0.1;
             float i_gain = 0.3;
             float d_gain = 0.1;
-
+            std::cout<<"ObjLen : "<<in->ObjLen[0]<<std::endl;
+            std::cout<<"ObjWidth : "<<in->ObjWidth[0]<<std::endl;
             double error = v0 - vr;
             printLogTitle(message_id, "vr");
             std::cout<<vr<<std::endl;
@@ -626,7 +666,7 @@ int main(int argc, const char * argv[])
             }
         }
     }
-
+    write_1.close();
     // Close the server of the agent
     server_agent_close();
     return 0;
